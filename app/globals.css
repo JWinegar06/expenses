@@ -1,1 +1,24 @@
 @import "tailwindcss";
+@tailwindcss base;
+@tailwindcss components;
+@tailwindcss utilities;
+
+@layer base{
+  body{
+    @apply text-white bg-black;
+  }
+
+  button{
+    @apply hover:scale-110 transition-all duration-100
+  }
+}
+
+@layer utilities{
+  .btn{
+    @apply px-4 py-2 text-sm capitalize rounded-xl
+  }
+
+  .btn-danger{
+    @apply  bg-red-900 border-red-900 text-white
+  }
+}
