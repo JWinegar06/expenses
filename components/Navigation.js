@@ -7,7 +7,7 @@ function Nav() {
         {/* User Information */}
         <div className="flex items-center gap-2">
           {/* img */}
-          <div className="h-[60px] w-[60px] rounded-full overflow-hidden">
+          <div className="h-[40px] w-[40px] rounded-full overflow-hidden">
             <img
               className="object-cover h-full w-full"
               src="https://s4.anilist.co/file/anilistcdn/character/large/n134384-yskpdM3N2wKa.png"
