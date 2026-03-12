@@ -2,7 +2,7 @@
 
 @layer base{
   body{
-    @apply text-white bg-slate-800;
+    @apply text-white bg-slate-900;
   }
 
   button{
