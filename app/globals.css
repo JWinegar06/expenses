@@ -2,7 +2,7 @@
 
 @layer base{
   body{
-    @apply text-white bg-slate-900;
+    @apply text-white bg-slate-900 relative;
   }
 
   button{
@@ -24,6 +24,6 @@
   }
 
   .btn-danger{
-    @apply border bg-red-300 border-red-900 text-white
+    @apply border bg-red-900 border-red-300 text-white
   }
 }
