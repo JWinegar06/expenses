@@ -1,64 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { financeContext } from "@/lib/store/finance-context";
 
 import { currencyFormatter } from "@/lib/utils";
 
 import ExpenseCategoryItem from "@/components/ExpenseCategoryItem";
 
 import AddIncomeModal from "@/components/modals/AddIncomeModal";
+import AddExpensesModal from "@/components/modals/AddExpensesModal";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    title: "Uniforms",
-    color: "yellow",
-    total: 2000,
-  },
-  {
-    id: 2,
-    title: "Weapons",
-    color: "Blue",
-    total: 5000,
-  },
-  {
-    id: 3,
-    title: "Food",
-    color: "Green",
-    total: 500,
-  },
-  {
-    id: 4,
-    title: "Supplies",
-    color: "Purple",
-    total: 200,
-  },
-];
-
 export default function Home() {
   const [showAddIncomeModal, setShowAddIncomeModal] = useState(false);
+  const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
+
+  const [balance, setBalance] = useState(0);
+
+  const { expenses, income } = useContext(financeContext);
+
+  useEffect(() => {
+    const newBalance =
+      income.reduce((total, i) => {
+        return total + i.amount;
+      }, 0) -
+      expenses.reduce((total, e) => {
+        return total + e.total;
+      }, 0);
+
+    setBalance(newBalance);
+  }, [expenses, income]);
+
   return (
     <>
-      {/* Modal */}
-
+      {/* Add Income Modal */}
       <AddIncomeModal
         show={showAddIncomeModal}
         onClose={setShowAddIncomeModal}
       />
 
+      {/* Add Expenses Modal */}
+      <AddExpensesModal
+        show={showAddExpenseModal}
+        onClose={setShowAddExpenseModal}
+      />
+
       <main className="container max-w-2xl px-6 mx-auto">
         <section className="py-3">
           <small className="text-gray-400 text-md">My Balance</small>
-          <h2 className="text-4xl font-bold">{currencyFormatter(100000)}</h2>
+          <h2 className="text-4xl font-bold">{currencyFormatter(balance)}</h2>
         </section>
 
         <section className="flex items-center gap-2 py-3">
-          <button onClick={() => {}} className="btn btn-primary">
+          <button
+            onClick={() => {
+              setShowAddExpenseModal(true);
+            }}
+            className="btn btn-primary"
+          >
             + Expenses
           </button>
           <button
@@ -71,35 +74,30 @@ export default function Home() {
           </button>
         </section>
 
-        {/* Expense Section */}
+        {/* Expenses */}
         <section className="py-6">
           <h3 className="text-2xl">My Expenses</h3>
           <div className="flex flex-col gap-4 mt-6">
-            {DUMMY_DATA.map((expense) => (
-              <ExpenseCategoryItem
-                key={expense.id}
-                color={expense.color}
-                title={expense.title}
-                total={expense.total}
-              />
-            ))}
+            {expenses.map((expense) => {
+              return <ExpenseCategoryItem key={expense.id} expense={expense} />;
+            })}
           </div>
         </section>
 
-        {/* Stats Chart */}
+        {/* Chart Section */}
         <section className="py-6">
           <h3 className="text-2xl">Stats</h3>
           <div className="w-1/2 mx-auto">
             <Doughnut
               data={{
-                labels: DUMMY_DATA.map((expense) => expense.title),
+                labels: expenses.map((expense) => expense.title),
                 datasets: [
                   {
                     label: "Expenses",
-                    data: DUMMY_DATA.map((expense) => expense.total),
-                    backgroundColor: DUMMY_DATA.map((expense) => expense.color),
-                    borderColor: ["black"],
-                    borderWidth: 2,
+                    data: expenses.map((expense) => expense.total),
+                    backgroundColor: expenses.map((expense) => expense.color),
+                    borderColor: ["#18181b"],
+                    borderWidth: 5,
                   },
                 ],
               }}
