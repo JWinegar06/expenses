@@ -1,29 +1,59 @@
-# Final Fantasy XV Expense Tracker
+# Royal Treasury
 
-A Final Fantasy XV-inspired expense tracker built with Next.js, Firebase, Tailwind CSS, and Chart.js.
+A Final Fantasy XV-inspired expense tracker built with Next.js, React, Firebase, Tailwind CSS, and Chart.js.
 
-The application uses a **Royal Treasury of Lucis** theme inspired by the menus and visual style of Final Fantasy XV.
+The application transforms a traditional expense tracker into the **Royal Treasury of Lucis**, using a dark Insomnia-inspired interface with royal blue, silver, and gold styling.
 
 ## Features
 
-- Google sign-in
+- Google authentication
+- Track available funds
 - Add income
-- Add expenses
+- Add expenditures
 - Create custom expense categories
-- Delete income and expense entries
-- Track current balance
 - View expense history
-- Expense breakdown chart
-- FFXV-inspired Royal Treasury interface
-- Responsive design
+- Delete income and expense entries
+- Delete expense categories
+- Expense percentage calculations
+- Category spending progress bars
+- Doughnut chart expenditure report
+- Responsive FFXV-inspired interface
+
+## Royal Treasury Dashboard
+
+The main dashboard includes:
+
+### Available Funds
+
+Displays the current balance after income and expenditures are calculated.
+
+**Available Funds = Total Income - Total Expenditures**
+
+### Expenditure Ledger
+
+Each expense category displays:
+
+- Category name
+- Amount spent
+- Percentage of total spending
+- Spending progress bar
+- Custom category color
+
+Selecting a category opens its expense history.
+
+### Expenditure Report
+
+The Royal Treasury Analysis section contains a doughnut chart showing how recorded expenditures are distributed between active categories.
+
+Categories with `$0.00` in spending remain in the ledger but are excluded from the chart until an expenditure is recorded.
 
 ## Built With
 
 - Next.js
 - React
 - Tailwind CSS
-- Firebase / Firestore
 - Firebase Authentication
+- Cloud Firestore
 - Chart.js
 - React Chart.js 2
 - React Icons
@@ -31,7 +61,7 @@ The application uses a **Royal Treasury of Lucis** theme inspired by the menus a
 
 ## Getting Started
 
-Install the project dependencies:
+Install dependencies:
 
 npm install
 
@@ -39,36 +69,63 @@ Start the development server:
 
 npm run dev
 
-Open the application in your browser:
+Then open:
 
 http://localhost:3000
 
 ## Firebase
 
-This project uses Firebase for:
+Firebase is used for authentication and financial data storage.
 
-- Google Authentication
-- Income storage
-- Expense storage
+The application stores:
+
+- User income
 - Expense categories
+- Individual expenditures
+- Category totals
 
-Make sure your Firebase configuration is set up in the project before running the application.
+Financial records are associated with the authenticated user's Firebase UID.
 
-## Royal Treasury
+## Project Structure
 
-The dashboard tracks:
+app/
+  globals.css
+  layout.js
+  page.js
 
-- Available Funds
-- Income / Deposits
-- Expenditures
-- Expense Categories
-- Expense History
-- Treasury Analysis
+components/
+  ExpenseCategoryItem.js
+  Modal.js
+  Navigation.js
+  SignIn.js
 
-Categories with a balance of `$0.00` remain visible in the ledger but are excluded from the expense chart until spending is recorded.
+components/modals/
+  AddExpensesModal.js
+  AddIncomeModal.js
+  ViewExpenseModal.js
+
+lib/store/
+  auth-context.js
+  finance-context.js
+
+## Theme
+
+The interface is inspired by the visual style of Final Fantasy XV and the Crown City of Insomnia.
+
+The design uses:
+
+- Dark navy backgrounds
+- Lucian blue highlights
+- Gold accents
+- Angular menu elements
+- Royal Treasury terminology
+- RPG-style expenditure indicators
+- Minimal menu-style typography
 
 ## Disclaimer
 
-This is a fan-made project inspired by **Final Fantasy XV**.
+This is a fan-made project created for educational and portfolio purposes.
 
-Final Fantasy XV and related names and properties belong to Square Enix. This project is not affiliated with or endorsed by Square Enix.
+Final Fantasy XV, Lucis, Insomnia, and related properties belong to Square Enix.
+
+This project is not affiliated with or endorsed by Square Enix.
