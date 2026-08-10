@@ -1,38 +1,114 @@
 @import "tailwindcss";
 
+:root {
+  --night: #070b14;
+  --night-soft: #0d1422;
+  --panel: rgba(13, 20, 34, 0.88);
+  --panel-light: rgba(22, 33, 52, 0.78);
+  --royal-blue: #6fb7ff;
+  --royal-blue-bright: #a9d5ff;
+  --gold: #d6b66f;
+  --gold-light: #f1d99a;
+  --silver: #cbd5e1;
+  --danger: #b84a55;
+}
+
 @layer base {
- html {
+  html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply text-white bg-slate-900 relative;
+    @apply relative min-h-screen text-slate-100 antialiased;
+    background:
+      radial-gradient(circle at top, rgba(58, 111, 168, 0.20), transparent 34rem),
+      linear-gradient(180deg, #0b1220 0%, var(--night) 55%, #03060b 100%);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.18;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 42px 42px;
   }
 
   button {
-    @apply hover:scale-110 transition-all duration-100;
+    @apply transition-all duration-200;
   }
 
-  input {
-    @apply px-4 py-2 bg-slate-600 rounded-xl;
+  button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+  }
+
+  input,
+  select,
+  textarea {
+    @apply px-4 py-2 rounded-md text-slate-100 outline-none transition;
+    background: rgba(8, 14, 25, 0.9);
+    border: 1px solid rgba(111, 183, 255, 0.28);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--royal-blue);
+    box-shadow: 0 0 0 3px rgba(111, 183, 255, 0.12);
   }
 }
 
 @layer utilities {
+  .ff-panel {
+    background: linear-gradient(145deg, var(--panel-light), var(--panel));
+    border: 1px solid rgba(111, 183, 255, 0.20);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(12px);
+  }
+
+  .ff-kicker {
+    color: var(--gold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .ff-title {
+    color: #f8fafc;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 24px rgba(111, 183, 255, 0.22);
+  }
+
+  .ff-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(111,183,255,.65), rgba(214,182,111,.55), transparent);
+  }
+
   .btn {
-    @apply self-start px-4 py-2 text-sm capitalize rounded-xl;
+    @apply self-start px-5 py-2 text-sm uppercase rounded-md font-semibold tracking-wider;
+    border: 1px solid transparent;
   }
 
   .btn-primary {
-    @apply border bg-red-900 border-red-300 text-slate-400;
+    color: #eaf5ff;
+    background: linear-gradient(180deg, rgba(41, 103, 165, 0.95), rgba(20, 58, 101, 0.95));
+    border-color: rgba(169, 213, 255, 0.55);
+    box-shadow: 0 0 20px rgba(63, 140, 218, 0.14);
   }
 
   .btn-primary-outline {
-    @apply border bg-green-900 border-green-300 text-slate-400;
+    color: var(--gold-light);
+    background: rgba(35, 30, 20, 0.45);
+    border-color: rgba(214, 182, 111, 0.58);
   }
 
   .btn-danger {
-    @apply border bg-red-900 border-red-300 text-white;
+    @apply text-white;
+    background: rgba(116, 35, 45, 0.82);
+    border-color: rgba(240, 128, 140, 0.55);
   }
 
   .input-group {
