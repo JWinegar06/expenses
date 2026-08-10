@@ -1,9 +1,13 @@
 import { useState } from "react";
+
 import { currencyFormatter } from "@/lib/utils";
 import ViewExpenseModal from "./modals/ViewExpenseModal";
 
-function ExpenseCategoryItem({ expense }) {
+function ExpenseCategoryItem({ expense, totalExpenses }) {
   const [showViewExpenseModal, setViewExpenseModal] = useState(false);
+
+  const percentage =
+    totalExpenses > 0 ? (expense.total / totalExpenses) * 100 : 0;
 
   return (
     <>
@@ -12,28 +16,41 @@ function ExpenseCategoryItem({ expense }) {
         onClose={setViewExpenseModal}
         expense={expense}
       />
+
       <button
-        type="button"
+        className="ledger-row"
         onClick={() => setViewExpenseModal(true)}
-        className="ff-list-item group w-full text-left"
       >
-        <span className="flex items-center gap-3">
-          <span
-            className="h-3 w-3 rotate-45 border border-white/30 shadow-[0_0_12px_currentColor]"
-            style={{ backgroundColor: expense.color, color: expense.color }}
-          />
-          <span>
-            <span className="block text-xs uppercase tracking-[0.2em] text-slate-500">
-              Ledger
-            </span>
-            <span className="capitalize text-slate-100 group-hover:text-white">
-              {expense.title}
-            </span>
-          </span>
-        </span>
-        <span className="font-semibold tabular-nums text-slate-200">
-          {currencyFormatter(expense.total)}
-        </span>
+        <div
+          className="ledger-gem"
+          style={{ "--category-color": expense.color }}
+        />
+
+        <div className="ledger-info">
+          <div className="ledger-heading">
+            <div>
+              <span className="ledger-label">Ledger Allocation</span>
+              <h4>{expense.title}</h4>
+            </div>
+
+            <div className="ledger-value">
+              <strong>{currencyFormatter(expense.total)}</strong>
+              <span>{percentage.toFixed(1)}%</span>
+            </div>
+          </div>
+
+          <div className="allocation-track">
+            <div
+              className="allocation-value"
+              style={{
+                width: `${percentage}%`,
+                background: expense.color,
+              }}
+            />
+          </div>
+        </div>
+
+        <span className="ledger-arrow">›</span>
       </button>
     </>
   );
